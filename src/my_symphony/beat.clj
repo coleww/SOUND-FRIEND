@@ -65,7 +65,6 @@
 ;; instruments
 (defn avoice
   [note idx]
-  (reset! voice-1-atom idx)
   (if (= (mod idx 4) 0) (sill/play note)))
 
 (defn teebs
