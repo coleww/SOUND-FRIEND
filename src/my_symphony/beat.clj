@@ -2,66 +2,106 @@
   (:require [overtone.live :refer :all]
             [overtone.inst.synth :refer :all]
             [overtone.inst.drum :refer :all]
-            [overtone.inst.piano :refer :all]
             [int-2-freq.core :as me]
             [my-symphony.silly-bills :as sill]
             [shadertone.tone :as t]))
 
-                                        ;(t/start-fullscreen "src/my_symphony/disco.glsl")
+(t/start-fullscreen "src/my_symphony/disco.glsl" :textures [:previous-frame])
 
+(do
+  (t/stop)
+  (stop))
 
+;; patterns/probabilities
 
 (def pieces {:probs [
                      [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]
                      [1 0.1 1 0.1 1 0.1 1 0.1 1 0.1 1 0.1 1 0.1 1 0.1]
                      [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]
-                     [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]
-                     ]
-
+                     [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]]
              :notes [
                      [[7] [7] [7] [7] [3] [5] [3] [5]
                       [5] [5] [5] [5] [4] [4] [9] [9]]
-
-                     [[12 17] [14] [12 17] [14] [3 12] [5] [3 12] [5]
-                      [5 6] [4 5] [5 6] [12 9] [4 12] [14 9 6] [4 6 12] [14 9 17]]
-
-                     [[] [] [] [] [] [] [] []
-                      [] [] [] [] [] [] [] []]
-
-                     [[] [] [] [] [] [] [] []
-                      [] [] [] [] [] [] [] []]
-                     ]
+                     [[-7 7 9] [0 -7] [7 9] [0 -7] [5] [3 -1] [5] [3 -1]
+                      [5 -2] [4 -3] [5 -2] [4 -3] [7 -7] [9 -7] [9 -7] [7 -7]]
+                     [[1] [1] [1] [1] [3] [3] [3] [3]
+                      [5] [5] [5] [5] [7] [7] [7] [7]]
+                     [[1] [8] [1] [8] [3] [11] [3] [11]
+                      [5] [12] [5] [12] [7] [14] [7] [14]]]
              :index 0})
 
 (def beeps {:probs [
                     [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]
                     [0.75 0.5 0.75 0.5 0.75 0.5 0.75 0.5 0.75 0.5 0.75 0.5 0.75 0.5 0.75 0.5]
-                    [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]
-                    [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]
-                    ]
+                    [1 0.75 1 0.75 1 0.75 1 0.75 1 0.75 1 0.75 1 0.75 1 0.75]
+                    [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]]
             :notes [
-                    [[10 10 19] [19 10] [10 19 10] [19 10] [19 4 5] [4 5] [4 19 5] [4 5]
-                     [4 6 0] [0 5 6] [6 4 0] [5 3 0] [19 4 6 5 5 5] [19 6 4 5 5 5] [4 19 6 0 0] [19 4 6 0]]
-
-                    [[10 10 9] [9 10] [10 9 10] [9 10] [9 9 15] [9 15] [9 9 15] [9 15]
+                    [[5 5 12] [12 5] [5 12 5] [12 5] [12 4 5] [4 5] [4 12 5] [4 5]
+                     [4 6 0] [0 5 6] [6 4 0] [5 3 0] [12 4 6 5 5 5] [12 6 4 5 5 5] [4 12 6 0 0] [12 4 6 0]]
+                    [[5 5 9] [9 5] [5 9 5] [9 5] [9 9 15] [9 15] [9 9 15] [9 15]
                      [9 6 0] [0 15 6] [6 9 0] [15 3 0] [9 9 6 15 15 15] [9 6 9 15 15 15] [9 9 6 0 0] [9 9 6 0]]
+                    [[5] [5] [5] [1 8] [7] [7] [7] [3 8]
+                     [9] [9] [9] [5 12] [12] [12] [12] [7 14]]
+                    [[1 5 8] [1 5 8] [5] [5] [3 7 11] [3 7 11] [3] [3]
+                     [5 8 12] [5 8 12] [5] [5] [7 8 0] [7 8 0] [0] [0]]]
+            :index 0})
 
-                    [[] [] [] [] [] [] [] []
-                     [] [] [] [] [] [] [] []]
-
-                    [[] [] [] [] [] [] [] []
-                     [] [] [] [] [] [] [] []]
-                    ]
+(def kicks {:probs [[1 0 0 0 ]
+                    [1 1 0 1]]
             :index 1})
 
-(def metro (metronome 178))
+(def snares {:probs [[0 0 1 0 ]
+                     [0.25 0.25 1 0.25]]
+             :index 0})
 
-(defn player
-  "tick tick tick tock"
-  [beat]
-  (at (metro beat) (play beat))
-  (apply-by (metro (inc beat)) #'player (inc beat) []))
+(def chats {:probs [[0 1 0 1]
+                    [0.5 0.5 0.5 0.5]]
+            :index 1})
 
+(def ohats {:probs [[1 0 1 0]
+                    [1 0.5 1 0.5]]
+            :index 1})
+
+;; instruments
+(defn avoice
+  [note idx]
+  (reset! voice-1-atom idx)
+  (if (= (mod idx 4) 0) (sill/play note (rand-nth sill/sylls))))
+
+(defn teebs
+  [note idx]
+  (tb303 :note note :amp 0.75 :cutoff (get [2000 100 25000 1200] (mod idx 4)) :attack 0.25 )
+  (tb303 :note (+ 7  note) :amp 0.75 :cutoff (get [2000 100 25000 1200] (mod idx 4)) :attack 0.25 ))
+
+(defn kicky
+  [idx]
+  (dance-kick :amp 0.75))
+
+(defn snary
+  [idx]
+  (noise-snare :amp 0.75 :decay 0.5 :freq 1200))
+
+(defn chatty
+  [idx]
+  (closed-hat))
+
+(defn ohatty
+  [idx]
+  (open-hat))
+
+(defn play
+  "what happens now"
+  [beat funk-it-up]
+  (funk-it-up (mod beat 16) teebs pieces)
+  (funk-it-up (mod beat 16) avoice beeps)
+  (funk-it-up (mod beat 16) avoice pieces)
+  (funk-it-up (mod beat 4) kicky kicks)
+  (funk-it-up (mod beat 4) snary snares)
+  (funk-it-up (mod beat 4) chatty chats)
+  (funk-it-up (mod beat 4) ohatty ohats)
+  )
+
+;; utils/sequencer
 (defn get-current
   "grab current thing for stuff"
   [notations el]
@@ -73,56 +113,23 @@
   "roll the dice! play yr cards!"
   [idx instroo notations]
   (let [prob (get-current notations :probs)]
-    (println "MAYBE" idx prob)
-    ;; if random number is less than probability
     (if (< (rand) (get prob idx))
-      ;; if note notations exist
       (if (get-current notations :notes)
-        ;; get a random note for this beat and pass it to the instrument
         (->
          (get-current notations :notes)
          (get idx)
          (rand-nth)
          (me/int-2-freq :F2 :pent-maj)
          (hz->midi)
-         (instroo))
-        ;; else: play the instrument (sampler?)
-        (instroo)
-        ))))
+         (instroo idx))
+        (instroo idx)))))
 
-(defn avoice
-  [note]
-  (sill note :aaaa))
-
-
-(defn instro1
-  [note]
-  (tb303 (- note 24) 1 0.2 0.71915 0.215 0.5 0.21 650 0.75 0.15))
-
-(defn instro2
-  [note]
-  (tb303 (+ note 24) 0 0.92 0.75371915 0.81715 0.25 0.31 850 0.5 0.15))
-
-
-
-(defn play
-  "what happens now"
+(defn player
+  "tick tick tick tock"
   [beat]
-  (maybe-play (mod beat 16) instro1 pieces)
-  (maybe-play (mod beat 8) instro2 beeps)
+  (at (metro beat) (play beat maybe-play))
+  (apply-by (metro (inc beat)) #'player (inc beat) []))
 
-  (if  (= (mod beat 4) 0) (kick2 80 0.5 0.2 5))
-  (if  (= (mod (+ 2  beat) 4) 0) (snare 0.7 1 1 ))
-                                        ;(if (= (mod beat 2) 0) (open-hat))
-                                        ;(if (= (mod beat 4) 0) (closed-hat))
-                                        ;(if (= (mod beat 8) 0) (snare2 100 0.3 5 ))
-
-  )
-
-
+(def metro (metronome 178))
 
 (player (metro))
-
-(do
-  (t/stxop)
-  (stop))
