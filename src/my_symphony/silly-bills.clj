@@ -42,6 +42,6 @@
     ((get (syllable voices) base-note) :rate rate)))
 
 
-(play 30)
+(play 30 :eeee)
 
 (stop)

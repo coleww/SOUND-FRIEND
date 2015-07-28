@@ -7,7 +7,14 @@
             [my-symphony.silly-bills :as sill]
             [shadertone.tone :as t]))
 
-;(t/start-fullscreen "src/my_symphony/disco.glsl" :textures [:previous-frame])
+
+; synth1 synth2 kick snare c-hat o-hat
+(def last-probs (atom [0 0 0 0 0 ]))
+;(t/start-fullscreen "src/my_symphony/disco.glsl" :textures [:overtone-audio :previous-frame] :user-data {"iProbs" last-probs})
+
+
+(t/start-fullscreen "src/my_symphony/disco.glsl" :textures [:overtone-audio])
+;(swap! last-probs #(the average of this round of probs) )
 
 (do
   (t/stop)
@@ -47,32 +54,48 @@
                      [5 8 12] [5 8 12] [5] [5] [7 8 0] [7 8 0] [0] [0]]]
             :index 0})
 
-(def kicks {:probs [[1 0 0 0 ]
-                    [1 1 0 1]]
-            :index 1})
+(def kicks {:probs [[1 0.5 0 0 0 0 1 0]
+                    [1 1 0 1 1 1 0 1]]
+            :index 0})
 
-(def snares {:probs [[0 0 1 0 ]
-                     [0.25 0.25 1 0.25]]
-             :index 0})
+(def snares {:probs [[0 0 0 0 1 0.6 0.7 0.6 ]
+                     [0 0 0 0 0 0 0 0]
+                     [0.25 0.25 1 0.25 0 0 0 0]]
+             :index 1})
 
-(def chats {:probs [[0 1 0 1]
-                    [0.5 0.5 0.5 0.5]]
-            :index 1})
+(def chats {:probs [[0.7 0.7 1 0.27 0.27 0.27 0.21 0.27]
+                    [0 0 0 0 0 0 0 0]
+                    [0.5 0.5 0.5 0.5 0 0 0 0]]
+            :index 2})
 
-(def ohats {:probs [[1 0 1 0]
-                    [1 0.5 1 0.5]]
+(def ohats {:probs [[1 0.5 1 0.5 1 0.5 1 0.5]
+                    [0.25 0.5 0.25 0.5 0 0 0 0]
+                    [0 0 0 0 0 0 0 0]]
             :index 1})
 
 ;; instruments
 (defn avoice
   [note idx]
-  (if (= (mod idx 4) 0) (sill/play note)))
+  (;if (= (mod idx 2) 0) (sill/play (-  note 24) )
+   )
+  (if (= (mod idx 4) 0) (sill/play (-  note 0)))
+  ;(if (= (mod idx 6) 0) (sill/play (+  note 12) ))
+  ;(if (= (mod idx 8) 0) (sill/play (+ note 24) ))
+  )
+
+(cs80lead  )
+
+(ctl cs80lead :amp 0.75 :att 0.5 :cutoff 150)
 
 (defn teebs
   [note idx]
-  (tb303 :note note :amp 0.75 :cutoff (get [2000 100 25000 1200] (mod idx 4)) :attack 0.25 )
-  (tb303 :note (+ 7  note) :amp 0.75 :cutoff (get [2000 100 25000 1200] (mod idx 4)) :attack 0.25 ))
+  (ctl cs80lead :freq (midi->hz note))
 
+
+
+  (tb303 :note note  :amp 0.5 :cutoff (get [2000 100 18000 1000] (mod idx 4)) :attack 0.135 :release 0.25)
+  (tb303 :note (-  note 5) :amp 0.5 :cutoff (get [1700 200 19000 900] (mod idx 4)) :attack 0.125 :release 0.35))
+(stop)
 (defn kicky
   [idx]
   (dance-kick :amp 0.75))
@@ -92,14 +115,33 @@
 (defn play
   "what happens now"
   [beat funk-it-up]
+  ;(calculate-probs (mod beat 16))
   (funk-it-up (mod beat 16) teebs pieces)
   (funk-it-up (mod beat 16) avoice beeps)
   (funk-it-up (mod beat 16) avoice pieces)
-  (funk-it-up (mod beat 4) kicky kicks)
-  (funk-it-up (mod beat 4) snary snares)
-  (funk-it-up (mod beat 4) chatty chats)
-  (funk-it-up (mod beat 4) ohatty ohats)
+  (funk-it-up (mod beat 8) kicky kicks)
+  (funk-it-up (mod beat 8) snary snares)
+  (funk-it-up (mod beat 8) chatty chats)
+  (funk-it-up (mod beat 8) ohatty ohats)
   )
+
+
+
+
+
+
+
+
+(defn calculate-probs
+  "there is a better way of doing this, i am certain"
+  [idx]
+  (reset! last-probs  [(get  (get (:probs pieces) (:index pieces)) idx)
+                       (get  (get (:probs beeps) (:index beeps)) idx)
+                       (get  (get (take 16 (cycle (:probs kicks))) (:index kicks)) idx)
+                       (get  (get  (take 16 (cycle (:probs snares))) (:index snares)) idx)
+                       (get  (get  (take 16 (cycle (:probs chats))) (:index chats)) idx)
+                       (get  (get  (take 16 (cycle (:probs ohats))) (:index ohats)) idx)]))
+
 
 ;; utils/sequencer
 (defn get-current
@@ -119,7 +161,7 @@
          (get-current notations :notes)
          (get idx)
          (rand-nth)
-         (me/int-2-freq :F2 :pent-maj)
+         (me/int-2-freq :F2 :pent-min)
          (hz->midi)
          (instroo idx))
         (instroo idx)))))
@@ -133,59 +175,5 @@
   (apply-by (metro (inc beat)) #'player (inc beat) []))
 
 
-(player (metro)) (stop)
-
-
-
-(def mpk  (midi-find-connected-device "MPK"))
-
-(on-event (conj (midi-mk-full-device-key mpk) :control-change)
-          (fn [e]
-            (let [note (:note e)
-                  vel  (:velocity e)]
-              ;; the pads! bank/#.
-
-              (cond
-                (= note 48) (println note vel) ;1/5
-                (= note 49) (println note vel) ;1/6
-                (= note 50) (println note vel) ;1/7
-                (= note 51) (println note vel) ;1/8
-                (= note 44) (println note vel) ;1/1
-                (= note 45) (println note vel) ;1/2
-                (= note 46) (println note vel) ;1/3
-                (= note 47) (println note vel) ;1/4
-
-                (= note 36) (println note vel) ;2/5
-                (= note 37) (println note vel) ;2/6
-                (= note 38) (println note vel) ;2/7
-                (= note 39) (println note vel) ;2/8
-                (= note 32) (println note vel) ;2/1
-                (= note 33) (println note vel) ;2/2
-                (= note 34) (println note vel) ;2/3
-                (= note 35) (println note vel) ;2/4
-                :else (do ; it's a piano key!
-                        (piano note)))))
-                    ::keyboard-handler)
-
-(on-event (conj (midi-mk-full-device-key mpk) :control-change)
-          (fn [e]
-            (let [note (:note e)
-                  vel  (:velocity e)]
-
-              ;; control knobs
-              (cond
-                (= note 1) (println note vel)
-                (= note 2) (println note vel)
-                (= note 3) (println note vel)
-                (= note 4) (println note vel)
-                (= note 5) (println note vel)
-                (= note 6) (println note vel)
-                (= note 7) (println note vel)
-                (= note 8) (println note vel)
-                :else (println "what " e))
-
-              ))
-          ::knob-handler)
-
-(remove-event-handler ::keyboard-handler)
-(remove-event-handler ::knob-handler)
+(player (metro))
+(stop)
