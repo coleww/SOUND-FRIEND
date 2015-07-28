@@ -61,17 +61,17 @@
 (def snares {:probs [[0 0 0 0 1 0.6 0.7 0.6 ]
                      [0 0 0 0 0 0 0 0]
                      [0.25 0.25 1 0.25 0 0 0 0]]
-             :index 1})
+             :index 0})
 
 (def chats {:probs [[0.7 0.7 1 0.27 0.27 0.27 0.21 0.27]
                     [0 0 0 0 0 0 0 0]
                     [0.5 0.5 0.5 0.5 0 0 0 0]]
-            :index 2})
+            :index 0})
 
 (def ohats {:probs [[1 0.5 1 0.5 1 0.5 1 0.5]
                     [0.25 0.5 0.25 0.5 0 0 0 0]
                     [0 0 0 0 0 0 0 0]]
-            :index 1})
+            :index 0})
 
 ;; instruments
 (defn avoice
@@ -95,7 +95,8 @@
 
   (tb303 :note note  :amp 0.5 :cutoff (get [2000 100 18000 1000] (mod idx 4)) :attack 0.135 :release 0.25)
   (tb303 :note (-  note 5) :amp 0.5 :cutoff (get [1700 200 19000 900] (mod idx 4)) :attack 0.125 :release 0.35))
-(stop)
+
+
 (defn kicky
   [idx]
   (dance-kick :amp 0.75))
@@ -115,14 +116,27 @@
 (defn play
   "what happens now"
   [beat funk-it-up]
-  ;(calculate-probs (mod beat 16))
-  (funk-it-up (mod beat 16) teebs pieces)
-  (funk-it-up (mod beat 16) avoice beeps)
-  (funk-it-up (mod beat 16) avoice pieces)
-  (funk-it-up (mod beat 8) kicky kicks)
-  (funk-it-up (mod beat 8) snary snares)
-  (funk-it-up (mod beat 8) chatty chats)
-  (funk-it-up (mod beat 8) ohatty ohats)
+                                        ;(calculate-probs (mod beat 16))
+
+  (if (=  (mod beat 4) 0)
+    (do ;; every fourth beat
+      (funk-it-up (mod beat 16) teebs pieces)
+      (funk-it-up (mod beat 8) chatty chats)
+      )
+    (if (= (mod beat 2) 0)
+      (do ;; every second beat
+        (funk-it-up (mod beat 16) teebs pieces)
+        (funk-it-up (mod beat 8) ohatty ohats)
+        )
+      (do ; so-called "regular" speed
+        (funk-it-up (mod beat 8) kicky kicks)
+        (funk-it-up (mod beat 8) snary snares)
+        )
+      )
+
+    )
+
+
   )
 
 
