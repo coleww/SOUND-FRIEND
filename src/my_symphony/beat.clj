@@ -36,7 +36,7 @@
                       [5] [5] [5] [5] [7] [7] [7] [7]]
                      [[1] [8] [1] [8] [3] [11] [3] [11]
                       [5] [12] [5] [12] [7] [14] [7] [14]]]
-             :index 0})
+             :index 2})
 
 (def beeps {:probs [
                     [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]
@@ -52,49 +52,50 @@
                      [9] [9] [9] [5 12] [12] [12] [12] [7 14]]
                     [[1 5 8] [1 5 8] [5] [5] [3 7 11] [3 7 11] [3] [3]
                      [5 8 12] [5 8 12] [5] [5] [7 8 0] [7 8 0] [0] [0]]]
+            :index 2})
+
+(def kicks {:probs [[1 0.5 0 0 1 0 1 0]
+                    [1 1 0 1 1 1 0 1]
+                    [0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5]]
             :index 0})
 
-(def kicks {:probs [[1 0.5 0 0 0 0 1 0]
-                    [1 1 0 1 1 1 0 1]]
-            :index 0})
-
-(def snares {:probs [[0 0 0 0 1 0.6 0.7 0.6 ]
+(def snares {:probs [[0 0 1 0 1 0.6 1 0.6 ]
                      [0 0 0 0 0 0 0 0]
-                     [0.25 0.25 1 0.25 0 0 0 0]]
+                     [0.25 0.25 1 0.25 0.5 0.5 1 0.5]]
              :index 0})
 
 (def chats {:probs [[0.7 0.7 1 0.27 0.27 0.27 0.21 0.27]
-                    [0 0 0 0 0 0 0 0]
-                    [0.5 0.5 0.5 0.5 0 0 0 0]]
-            :index 0})
+                    [1 0 1 0 1 0 1 0]
+                    [0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5]]
+            :index 1})
 
 (def ohats {:probs [[1 0.5 1 0.5 1 0.5 1 0.5]
-                    [0.25 0.5 0.25 0.5 0 0 0 0]
-                    [0 0 0 0 0 0 0 0]]
+                    [0.25 0.5 0.25 0.5 0.5 0.5 0.5 0.5]
+                    [0 1 0 1 0 1 0 1]]
             :index 0})
 
 ;; instruments
 (defn avoice
   [note idx]
-  (;if (= (mod idx 2) 0) (sill/play (-  note 24) )
-   )
-  (if (= (mod idx 4) 0) (sill/play (-  note 0)))
+  ;(if (= (mod idx 2) 0) (sill/play (+  note 5)))
+  ;(if (= (mod idx 4) 0) (sill/play (+  note 3)))
   ;(if (= (mod idx 6) 0) (sill/play (+  note 12) ))
-  ;(if (= (mod idx 8) 0) (sill/play (+ note 24) ))
+  ;(if (= (mod idx 3) 0) (sill/play (+ note 12) ))
   )
 
 (cs80lead  )
 
-(ctl cs80lead :amp 0.75 :att 0.5 :cutoff 150)
+(ctl cs80lead :amp 0.015 :att 0.25 :cutoff 1500)
 
 (defn teebs
   [note idx]
-  (ctl cs80lead :freq (midi->hz note))
+  (ctl cs80lead :freq (midi->hz (- note 12)))
 
 
 
   (tb303 :note note  :amp 0.5 :cutoff (get [2000 100 18000 1000] (mod idx 4)) :attack 0.135 :release 0.25)
-  (tb303 :note (-  note 5) :amp 0.5 :cutoff (get [1700 200 19000 900] (mod idx 4)) :attack 0.125 :release 0.35))
+  ;(tb303 :note (-  note 7) :amp 0.5 :cutoff (get [1700 200 19000 900] (mod idx 4)) :attack 0.125 :release 0.35)
+  )
 
 
 (defn kicky
@@ -116,31 +117,28 @@
 (defn play
   "what happens now"
   [beat funk-it-up]
+;(funk-it-up (mod beat 8) kicky kicks)
+;(funk-it-up (mod beat 8) snary snares)
+(funk-it-up (mod beat 8) chatty chats)
+(funk-it-up (mod beat 8) ohatty ohats)
+
+(funk-it-up (mod beat 16) teebs pieces)
                                         ;(calculate-probs (mod beat 16))
-
-  (if (=  (mod beat 4) 0)
-    (do ;; every fourth beat
-      (funk-it-up (mod beat 16) teebs pieces)
-      (funk-it-up (mod beat 8) chatty chats)
+;; wait this is not correct
+  (if (=  (mod beat 3) 0)
+    (do ;; evens
+     ;
+      (funk-it-up (mod beat 8) avoice beeps)
       )
-    (if (= (mod beat 2) 0)
-      (do ;; every second beat
-        (funk-it-up (mod beat 16) teebs pieces)
-        (funk-it-up (mod beat 8) ohatty ohats)
-        )
-      (do ; so-called "regular" speed
-        (funk-it-up (mod beat 8) kicky kicks)
-        (funk-it-up (mod beat 8) snary snares)
-        )
+    (do ;; odds
+
+(funk-it-up (mod beat 16) avoice pieces)
       )
 
-    )
+    ))
 
 
-  )
-
-
-
+(stop)
 
 
 
