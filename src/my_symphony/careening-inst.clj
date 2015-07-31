@@ -8,6 +8,7 @@
 ;; instruments
 (defn vox
   [note idx]
+
                                         ;(if (= (mod idx 5) 0) (sill/play (+ note 4)))
                                         ;(if (= (mod idx 7) 0) (sill/play (+ note 2)))
                                         ;(if (= (mod idx 5) 0) (sill/play (+ note 0)))
@@ -21,7 +22,7 @@
 
 (ctl cs80lead :amp 0.05 :att 1.5 :cutoff 500)
 
-(defn leed
+(defn lead
   [note idx]
   (ctl cs80lead :freq (midi->hz (+ note 12))))
 
@@ -37,6 +38,8 @@
 (defn ambnt
   [note idx]
   )
+
+
 
 (defn kicky
   [idx]
