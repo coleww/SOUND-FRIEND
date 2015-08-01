@@ -32,16 +32,13 @@
              :aaaa {
                     70 (freesound 70403) 67 (freesound 70402) 64 (freesound 70401) 61 (freesound 70400) 58 (freesound 70399) 55 (freesound 70398) 52 (freesound 70397) 49 (freesound 70396) 46 (freesound 70395) 43 (freesound 70394) 40 (freesound 70393) 37 (freesound 70392) 34 (freesound 70391) 31 (freesound 70390)}})
 
+(def sylls  (keys voices))
+
 (defn play
   "accepts midi note and syllable to play, uses random if none passed"
   [note & [syll]]
-  (let [syllable (or syll (rand-nth (keys voices)))
+  (let [syllable (or syll (rand-nth sylls))
         notes (filter #(<= % note) (keys (syllable voices)))
         base-note (or (last (sort notes)) 31)
         rate (/ (midi->hz note) (midi->hz base-note))]
     ((get (syllable voices) base-note) :rate rate)))
-
-
-(play 30 :eeee)
-
-(stop)

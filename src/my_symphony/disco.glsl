@@ -2,11 +2,11 @@ void main(void) {
   vec2 uv = (gl_FragCoord.xy / iResolution.xy); //wobble this?
   float thang = iProbs
 
-    vec4 tex = texture2D(iChannel4,uv).x;
+  vec4 tex = texture2D(iChannel3,uv).x;
 
   uv =  uv + vec2[abs(sin(tex)) * 0.01, cos(tex) * 0.005]
 
-    vec4 c1 = texture2D(iChannel0,uv).rgb;
+  vec4 c1 = texture2D(iChannel0,uv).rgb;
   vec4 c2 = texture2D(iChannel1,uv).rgb;
   vec4 c3 = texture2D(iChannel2,uv).rgb;
   vec4 c4 = texture2D(iChannel3,uv).rgb;
