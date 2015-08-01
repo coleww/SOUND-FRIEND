@@ -1,16 +1,17 @@
-(ns my-symphony.careening-prob)
+(ns my-symphony.careening-prob
+  (:require [overtone.live :refer :all]
+            [my-symphony.sequencer :refer :all]))
 ;; THESE SHOULD ALL BE ATOMS
 ;; ALL OF THEM
 ;; mebbe defined in the seq file?
 ;;5 and constantly reset-ted or swapped?
-(reset! bases {:probs [
+(reset! bazes {:probs [
                      (vec (take 16 (cycle [1 0 0 0])))
                      [1 1 1 0 1 1 0 0 1 1 1 0 1 1 0 0]
                      [1 0.1 1 0.1 1 0.1 1 0.1 1 0.1 1 0.1 1 0.1 1 0.1]
                      [1 1 1 0 1 1 1 0 1 1 1 0 1 1 1 0]
                      [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]]
              :notes [
-                     (vec (map-indexed #(vector (-  %1 %2)) (take 16 (cycle [3 3 7 7]))))
                      [[7] [7] [9] [9] [3] [3] [1] [3]
                       [5] [5] [7] [9] [4] [4] [2] [6]]
                      [[-7 7 9] [0 -7] [7 9] [0 -7] [5] [3 -5] [5] [3 -5]
@@ -19,7 +20,8 @@
                       [5] [5] [5] [5] [7] [7] [7] [7]]
                      [[1] [8] [1] [8] [3] [11] [3] [11]
                       [5] [12] [5] [12] [7] [14] [7] [14]]]
-             :index 4})
+               :index 4
+               :mod 16})
 
 (reset! leads {:probs [
                     (vec (take 16 (cycle [0 0 0 0])))
@@ -37,7 +39,8 @@
                      [9] [9] [9] [5 12] [12] [12] [12] [7 14]]
                     [[1 5 8] [1 5 8] [5] [5] [3 7 11] [3 7 11] [3] [3]
                      [5 8 12] [5 8 12] [5] [5] [7 8 0] [7 8 0] [0] [0]]]
-            :index 3})
+               :index 3
+               :mod 16})
 
 (reset! ambnts {:probs [
                      (vec (take 16 (cycle [1 0 0 0])))
@@ -55,7 +58,8 @@
                       [5] [5] [5] [5] [7] [7] [7] [7]]
                      [[1] [8] [1] [8] [3] [11] [3] [11]
                       [5] [12] [5] [12] [7] [14] [7] [14]]]
-             :index 4})
+                :index 4
+                :mod 16})
 
 (reset! hevvys {:probs [
                     (vec (take 16 (cycle [0 0 0 0])))
@@ -73,7 +77,8 @@
                      [9] [9] [9] [5 12] [12] [12] [12] [7 14]]
                     [[1 5 8] [1 5 8] [5] [5] [3 7 11] [3 7 11] [3] [3]
                      [5 8 12] [5 8 12] [5] [5] [7 8 0] [7 8 0] [0] [0]]]
-            :index 3})
+                :index 3
+                :mod 16})
 
 
 (reset! kicks {:probs [(vec (take 8 (cycle [0])))        ;0
@@ -81,12 +86,14 @@
                     [1 1 0 1 1 1 0 1]                  ;2
                     [1 0 0 0 0 0 0 0]                  ;3
                     [0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5]] ;4
-            :index 2})
+               :index 2
+               :mod 8})
 
 (reset! snares {:probs [[0 0 0 0 0 0 0 0]
                      [0 0 0 0 0.25 0.5 0.75 0.5]
                      [0 0 0 0 0 1 0 0]]
-             :index 1})
+                :index 1
+                :mod 8})
 
 (reset! chats {:probs [[0 0 0 0 0 0 0 0 ]
                     [0.7 0.7 1 0.27 0.27 0.27 0.21 0.27]
@@ -94,21 +101,25 @@
                     [0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5]
                     (vec (take 8 (cycle [0 1 0.2 0.7])))
                     ]
-            :index 1})
+               :index 1
+               :mod 8})
 
 (reset! ohats {:probs [[0 0 0 0 0 0 0 0 0]
                     [1 0.5 1 0.5 1 0.5 1 0.5]
                     [0.25 0.5 0.25 0.5 0.5 0.5 0.5 0.5]
                     [0 1 0 1 0 1 0 1]
                     (vec (take 8 (cycle [0 0.2 0.7 1])))]
-            :index 1})
+               :index 1
+               :mod 8})
 (reset! crashes {:probs [
 
                       ]
-              :index 0})
+                 :index 0
+                 :mod 8})
 
 
 (reset! toms {:probs [
 
                       ]
-              :index 0})
+              :index 0
+              :mod 8})

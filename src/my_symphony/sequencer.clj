@@ -1,18 +1,19 @@
 (ns my-symphony.sequencer
   (:require [overtone.live :refer :all]
-            [my-symphony.careening-inst.clj :refer :all]
-            [my-symphony.careening-prob.clj :refer :all]
             [int-2-freq.core :as me]))
 
-;(player (metro))
+(player (metro))
 ;(stop)
 
-;; instruments, these will get reset!
+(def key (atom {:tonic :F3 :scale :minor :bpm 152}))
+
+;; instruments
 (def lead (atom nil))
-(def base (atom nil))
+(def baze (atom nil))
 (def ambnt (atom nil))
 (def hevvy (atom nil))
 (def vox (atom nil))
+;; drums
 (def kicky (atom nil))
 (def snary (atom nil))
 (def chatty (atom nil))
@@ -21,38 +22,35 @@
 (def tommy (atom nil))
 
 ;; probabilities for samples/synths
-(def chats (atom {:probs [[]] :index 0}))
-(def ohats (atom {:probs [[]] :index 0}))
-(def kicks (atom {:probs [[]] :index 0}))
-(def snares (atom {:probs [[]] :index 0}))
-(def crashes (atom {:probs [[]] :index 0}))
-(def toms (atom {:probs [[]] :index 0}))
-(def voxes (atom {:probs [[]] :notes [[]] :index 0}))
-(def leads (atom {:probs [[]] :notes [[]] :index 0}))
-(def bases (atom {:probs [[]] :notes [[]] :index 0}))
-(def ambnts (atom {:probs [[]] :notes [[]] :index 0}))
-(def hevvys (atom {:probs [[]] :notes [[]] :index 0}))
+(def chats (atom {:probs [[]] :index 0 :mod 8}))
+(def ohats (atom {:probs [[]] :index 0 :mod 8}))
+(def kicks (atom {:probs [[]] :index 0 :mod 8}))
+(def snares (atom {:probs [[]] :index 0 :mod 8}))
+(def crashes (atom {:probs [[]] :index 0 :mod 8}))
+(def toms (atom {:probs [[]] :index 0 :mod 8}))
+(def voxes (atom {:probs [[]] :notes [[]] :index 0 :mod 16}))
+(def leads (atom {:probs [[]] :notes [[]] :index 0 :mod 16}))
+(def bazes (atom {:probs [[]] :notes [[]] :index 0 :mod 16}))
+(def ambnts (atom {:probs [[]] :notes [[]] :index 0 :mod 16}))
+(def hevvys (atom {:probs [[]] :notes [[]] :index 0 :mod 16}))
 
 (defn play
-  "what happens now PERHAPS this could utilize an atom that gets redefined elsewhere for the moduluses?"
+  "what happens"
   [beat funk-it-up]
-  (funk-it-up (mod beat 8) kicky kicks)
-  (funk-it-up (mod beat 8) snary snares)
-  (funk-it-up (mod beat 8) chatty chats)
-  (funk-it-up (mod beat 8) ohatty ohats)
-  (funk-it-up (mod beat 8) crashy crashes)
-  (funk-it-up (mod beat 8) tommy toms)
+  (funk-it-up beat @kicky @kicks)
+  (funk-it-up beat @snary @snares)
+  (funk-it-up beat @chatty @chats)
+  (funk-it-up beat @ohatty @ohats)
+  (funk-it-up beat @crashy @crashes)
+  (funk-it-up beat @tommy @toms)
 
-  (funk-it-up (mod beat 16) lead leads)
-  (funk-it-up (mod beat 16) base bases)
-  (funk-it-up (mod beat 16) ambnt ambnts)
-  (funk-it-up (mod beat 16) hevvy hevvys)
+  (funk-it-up beat @lead @leads)
+  (funk-it-up beat @baze @bazes)
+  (funk-it-up beat @ambnt @ambnts)
+  (funk-it-up beat @hevvy @hevvys)
 
-  (if (= (mod beat 2) 0)
-    (do ;; evens
-      (funk-it-up (mod beat 8) vox bases))
-    (do ;; odds
-      (funk-it-up (mod beat 8) vox leads))))
+  (funk-it-up beat @vox @bazes)
+  (funk-it-up beat @vox @leads))
 
 ;; utils/sequencer
 (defn get-current
@@ -64,20 +62,21 @@
 
 (defn maybe-play
   "roll the dice! play yr cards!"
-  [idx instroo notations]
-  (let [prob (get-current notations :probs)]
-    (if (< (rand) (get prob idx))
+  [beat instroo notations]
+  (let [prob (get-current notations :probs)
+        idx (mod beat (:mod notations))]
+    (if (and (pos? (count prob)) (< (rand) (get prob idx)))
       (if (pos? (count  (get-current notations :notes)))
         (->
          (get-current notations :notes)
          (get idx)
          (rand-nth)
-         (me/int-2-freq :F2 :pent-min)
+         (me/int-2-freq (:tonic @key) (:scale @key))
          (hz->midi)
          (instroo idx))
         (instroo idx)))))
 
-(def metro (metronome 178))
+(def metro (metronome (:bpm @key)))
 
 (defn player
   "tick tick tick tock"
