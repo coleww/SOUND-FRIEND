@@ -1,0 +1,27 @@
+{
+  "name": "midi-band",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "browserify -g uglifyify index.js -o www/bundle.js",
+    "watch": "watchify index.js -o www/bundle.js --debug --verbose",
+    "livereload": "livereloadify ./www",
+    "serve": "serve ./www",
+    "test": "standard && node test.js",
+    "publish": "npm run test"
+  },
+  "license": "MIT",
+  "description": "midi-band ----------------",
+  "author": "Cole Willsea <coleww@gmail.com> (http://colewillsea.com/)",
+  "devDependencies": {
+    "browserify": "^13.0.1",
+    "install": "^0.7.3",
+    "livereloadify": "^2.0.0",
+    "npm": "^3.8.9",
+    "serve": "^1.4.0",
+    "standard": "^7.0.1",
+    "tap": "^5.7.1",
+    "uglifyify": "^3.0.1",
+    "watchify": "^3.7.0"
+  }
+}
