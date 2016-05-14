@@ -1,5 +1,5 @@
 {
-  "name": "midi-band",
+  "name": "B-L-Z-R-S",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -22,6 +22,11 @@
     "standard": "^7.0.1",
     "tap": "^5.7.1",
     "uglifyify": "^3.0.1",
-    "watchify": "^3.7.0"
+    "watchify": "^3.7.0",
+    "web-midi": "^2.0.1"
+  },
+  "dependencies": {
+    "midi": "^0.9.4",
+    "midi-help": "^0.2.1"
   }
 }
