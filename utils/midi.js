@@ -1,39 +1,21 @@
-// var midi = require('web-midi')
-// var config = require('../config')
-// var outStream
+var midi = require('midi')
+var help = require('midi-help')
+var freq2midi = require('midiutils').frequencyToNoteNumber
+var int2freq = require('int2freq')
+var output = new midi.output()
+console.log(output.getPortCount())
+console.log(output.getPortName(0))
+output.openPort(0)
 
-// if (config.midi) {
-//   // how to get name of midi device automagically? presuming 1 output?
-//   outStream = midi.openOutput("midi_out")
-// } else {
-//   outStream = {
-//     write: function (data) {
-//       console.log(data)
-//     }
-//   }
-// }
-
-// module.exports = function (data) {
-//   // [channel, note, velocity]
-//   outStream.write(data)
-// }
-
-
-if (navigator.requestMIDIAccess) {
-    navigator.requestMIDIAccess({
-        sysex: false // this defaults to 'false' and we won't be covering sysex in this article.
-    }).then(onMIDISuccess, onMIDIFailure);
-} else {
-    alert("No MIDI support in your browser.");
-}
-
-// midi functions
-function onMIDISuccess(midiAccess) {
-    // when we get a succesful response, run this code
-    console.log('MIDI Access Object', midiAccess.outputs);
-}
-
-function onMIDIFailure(e) {
-    // when we get a failed response, run this code
-    console.log("No access to MIDI devices or your browser doesn't support WebMIDI API. Please use WebMIDIAPIShim " + e);
+module.exports = {
+  playSynth: function (data, length, key) {
+    var note = freq2midi(int2freq(data, key))
+    output.sendMessage(help.noteOn(note, 127))
+    setTimeout(function () {
+      output.sendMessage(help.noteOff(note, 127))
+    }, length)
+  },
+  playDrum: function (data) {
+    output.sendMessage(help.noteOn(96 + data, 127, 1))
+  }
 }

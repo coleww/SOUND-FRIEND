@@ -1,34 +1,24 @@
 // require('./songs/paths')
 
 
-// var midiOut = require('./utils/midi')
+var midiOut = require('./utils/midi')
 
 
+midiOut.playSynth(69)
+midiOut.playDrum(0)
 
-var midi = require('midi');
-var help = require('midi-help');
-// var stream1 = midi.createWriteStream();
-// stream1.write([176, 22, 1])
-// // Set up a new output.
-var output = new midi.output();
+var ds = [0, 2, 1, 2]
+var ss = [0, 0, 5, 7]
+var d = 0
+var s = 0
+setInterval(function () {
+  midiOut.playDrum(ds[d++ % 4])
 
-// Count the available output ports.
-console.log(output.getPortCount())
-
-// Get the name of a specified output port.
-console.log(output.getPortName(0))
-
-// Open the first available output port.
-output.openPort(0)
-
-// Send a MIDI message.
-
-// output.sendMessage([176,50,127]);
+  midiOut.playDrum(4)
+  // midiOut.playSynth(ss[s++ % 4], 500)
+}, 250)
 
 setInterval(function () {
-  output.sendMessage(help.noteOn(60 + [0, 2, 3, 5, 7][~~(Math.random() * 5)], 127))
-  output.sendMessage(help.noteOn(96 + [0, 2, 3, 5, 7][~~(Math.random() * 5)], 127, 1))
-}, 500)
-
-// Close the port when
- // done.
+  // midiOut.playDrum(ds[d++ % 4])
+  midiOut.playSynth(ss[s++ % 4], 750)
+}, 1000)
