@@ -13,6 +13,6 @@
     "midi": "^0.9.4",
     "midi-help": "^0.2.1",
     "midiutils": "0.0.4",
-    "spiderbite": "^1.1.1"
+    "spiderbite": "^1.1.2"
   }
 }
