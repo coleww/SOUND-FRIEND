@@ -15,13 +15,10 @@ seq.bind(false, function (data) {
 }, require('./snare'))
 
 seq.bind(true, function (data, section) {
-  // it is odd that we pass the config object to the sequencer,
-  // to then have it give it back to us
-  // but probably in the future this thing will do keychanges?
   midiOut.playSynth(data, 60000 / config.bpm, config.key)
 }, require('./bass'))
 
-seq.setStructure([[0]])
+seq.setStructure([[0, 0, 1], [1, 1, 0]])
 
 seq.start()
 
@@ -32,3 +29,6 @@ seq.start()
 // E 4  -3
 // b 1 -6
 // d 3 -4
+
+
+
