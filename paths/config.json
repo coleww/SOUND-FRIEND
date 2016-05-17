@@ -4,5 +4,6 @@
     "tonic": "A4",
     "scale": "major"
   },
-  "advanceMod": 2
+  "advanceMod": 2,
+  "midi": false
 }

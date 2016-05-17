@@ -14,5 +14,12 @@
     "midi-help": "^0.2.1",
     "midiutils": "0.0.4",
     "spiderbite": "^1.1.2"
+  },
+  "devDependencies": {
+    "dj-snazzy-snare": "^1.0.0",
+    "pie-ano": "^1.1.1",
+    "really-hi-hat": "^1.0.0",
+    "touch-down-dance": "^1.0.1",
+    "tunajs": "^0.4.4"
   }
 }
