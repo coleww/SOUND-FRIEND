@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
     "build": "browserify -g uglifyify index.js -o www/bundle.js",
     "watch": "watchify index.js -o www/bundle.js --debug --verbose",
     "livereload": "livereloadify ./www",
@@ -11,20 +10,15 @@
   },
   "description": "...",
   "author": "Cole Willsea <coleww@gmail.com> (http://colewillsea.com/)",
-  "dependencies": {
-    "int2freq": "^1.0.1",
-    "midi": "^0.9.4",
-    "midi-help": "^0.2.1",
-    "midiutils": "0.0.4",
-    "spiderbite": "^1.1.2"
-  },
   "devDependencies": {
     "browserify": "^13.0.1",
     "dj-snazzy-snare": "^1.0.0",
+    "int2freq": "^1.0.1",
     "livereloadify": "^2.0.0",
     "pie-ano": "^1.1.1",
     "really-hi-hat": "^1.0.0",
     "serve": "^1.4.0",
+    "spiderbite": "^1.1.2",
     "standard": "^7.1.0",
     "tap": "^5.7.2",
     "touch-down-dance": "^1.0.1",

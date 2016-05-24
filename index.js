@@ -1,18 +1,35 @@
-// require('./songs/paths')
+var ac = new (AudioContext || webkitAudioContext)()
 
-var Recorder = require('./recorder')
+
+
+
+
+
+
+
+
+
+
+var masterVolume = ac.createGain()
+masterVolume.connect(ac.destination)
+
+var instruments = require('./utils/buildInstruments')(ac, masterVolume)
+var seq = require('./songs/paths')(instruments)
+
+var Recorder = require('./utils/recorder')
+// TODO: use browserify trick to inline the worker here (if that is even possible due to liblamemp3 >_<)
 var worker = new Worker('./recorderWorkerMP3.js')
+var cassetteDeck = new Recorder(masterVolume, {}, worker)
 
+// START
+cassetteDeck.record()
+seq.start()
 
-this.recorder = new Recorder(MASTERVOLUMENODE, {}, worker)
-
-this.recorder.record()
-
-
-
-this.recorder.stop()
-this.recorder.exportAudio(function (b) {
-  console.log("GOT A WAV")
-
-  Recorder.forceDownload(b, "BLZRS--3_Things--" + fileName + '.mp3')
-})
+// STAHP
+seq.onEnd = function () {
+  cassetteDeck.stop()
+  cassetteDeck.exportAudio(function (b) {
+    console.log("gotcha")
+    Recorder.forceDownload(b, 'THE_NAME_OF_THE_SONG.mp3')
+  })
+}
