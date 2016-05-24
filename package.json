@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "build": "browserify -g uglifyify index.js -o www/bundle.js",
+    "watch": "watchify index.js -o www/bundle.js --debug --verbose",
+    "livereload": "livereloadify ./www",
+    "serve": "serve ./www"
   },
-  "license": "MIT",
   "description": "...",
   "author": "Cole Willsea <coleww@gmail.com> (http://colewillsea.com/)",
   "dependencies": {
@@ -16,10 +19,17 @@
     "spiderbite": "^1.1.2"
   },
   "devDependencies": {
+    "browserify": "^13.0.1",
     "dj-snazzy-snare": "^1.0.0",
+    "livereloadify": "^2.0.0",
     "pie-ano": "^1.1.1",
     "really-hi-hat": "^1.0.0",
+    "serve": "^1.4.0",
+    "standard": "^7.1.0",
+    "tap": "^5.7.2",
     "touch-down-dance": "^1.0.1",
-    "tunajs": "^0.4.4"
+    "tunajs": "^0.4.4",
+    "uglifyify": "^3.0.1",
+    "watchify": "^3.7.0"
   }
 }

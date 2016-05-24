@@ -16,3 +16,14 @@ PERHAPS: a pattern that gets called every 1 beat, incremementing a counter (or j
 IF: stuff has played N times without reaching the 2+ section
 THEN: make that be the next section
 OH SO: this could probably benefit from the start-of-sequence callback
+
+
+
+
+
+
+
+
+
+mattdiamond/Recorderjs
+akrennmair/libmp3lame-js
