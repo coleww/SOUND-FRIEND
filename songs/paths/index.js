@@ -19,7 +19,7 @@ module.exports = function (instruments) {
     instruments.bass(data, config.key)
   }, require('./bass'))
 
-  seq.setStructure([[0,1], [ null]])
+  seq.setStructure([[1], [ null]])
 
   return seq
 }

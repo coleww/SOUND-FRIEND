@@ -73,14 +73,15 @@ Recorder.forceDownload = function(blob, filename){
   var url = (window.URL || window.webkitURL).createObjectURL(blob);
   var link = window.document.createElement('a');
   link.href = url;
+  link.download = filename || 'output.wav';
+  link.textContent = "(download mp3)"
   // link.style.visibility = 'hidden'
-  document.body.appendChild(link)
+  document.getElementById('main').appendChild(link)
   var click = document.createEvent("Event");
   click.initEvent("click", true, true);
   link.dispatchEvent(click);
   // TODO: determine if the click event hack will work? if not, append a download link
   // return link
-  // does this
 }
 
 module.exports = Recorder
