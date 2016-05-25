@@ -1,3 +1,4 @@
+// ?
 var Recorder =  function(source, cfg, worker){
   var config = cfg || {};
   var bufferLen = config.bufferLen || 4096;
