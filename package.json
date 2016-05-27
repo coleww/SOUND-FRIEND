@@ -15,6 +15,7 @@
     "dj-snazzy-snare": "^1.0.0",
     "int2freq": "^1.0.1",
     "livereloadify": "^2.0.0",
+    "mespeak": "jaeh/mespeak",
     "pie-ano": "^1.1.1",
     "really-hi-hat": "^1.0.0",
     "serve": "^1.4.0",
