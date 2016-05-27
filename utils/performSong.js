@@ -14,6 +14,7 @@ module.exports = function (seq, masterVolume) {
     cassetteDeck.exportAudio(function (b) {
       console.log("gotcha")
       Recorder.forceDownload(b, 'THE_NAME_OF_THE_SONG.mp3')
+      // um, it could now jump to the next song in the album/set i guess?
     })
   }
 }

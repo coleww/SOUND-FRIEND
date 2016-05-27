@@ -1,9 +1,15 @@
 var int2freq = require('int2freq')
 
+// TODO:
+// OH HEY this file should prbly just delegate to functions in /instruments
+//
+
+
+
 module.exports = function () {
   var ac = new (AudioContext || webkitAudioContext)()
-  var masterVolume = ac.createGain()
-  masterVolume.connect(ac.destination)
+  var mainVolume = ac.createGain()
+  mainVolume.connect(mainVolume)
   var instruments = {}
 
   // var tuna = new Tuna(ac)
@@ -26,18 +32,18 @@ module.exports = function () {
 
   var kick = require('touch-down-dance')(ac)
   // .update({defaults: defaults?})
-  kick.connect(ac.destination)
+  kick.connect(mainVolume)
   var hat = require('really-hi-hat')(ac)
   // .update({defaults: defaults?})
-  hat.connect(ac.destination)
+  hat.connect(mainVolume)
   var snare = require('dj-snazzy-snare')(ac)
   // .update({defaults: defaults?})
-  snare.connect(ac.destination)
+  snare.connect(mainVolume)
 
 
   var piano = require('pie-ano')(ac)
   piano.update({attack: 0.1, decay: 0.05, sustain: 0.01, release: 0.01}, ac.currentTime)
-  piano.connect(ac.destination)
+  piano.connect(mainVolume)
 
   // should be able to pass along data to do different stuff. yeah.
   // perhaps for drums that means like, decay or smth. idk
@@ -60,7 +66,7 @@ module.exports = function () {
 
 
   instruments.ac = ac
-  instruments.masterVolume = masterVolume
+  instruments.mainVolume = mainVolume
 
 
 

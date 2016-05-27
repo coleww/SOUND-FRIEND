@@ -5,19 +5,19 @@ module.exports = function (instruments) {
   var seq = sb(config)
   seq.bind(false, function (data) {
     instruments.kick()
-  }, require('./kick'))
+  }, require('./data/kick'))
 
   seq.bind(false, function (data) {
     instruments.hat()
-  }, require('./hat'))
+  }, require('./data/chh'))
 
   seq.bind(false, function (data) {
     instruments.snare()
-  }, require('./snare'))
+  }, require('./data/snare'))
 
   seq.bind(true, function (data, section) {
     instruments.bass(data, config.key)
-  }, require('./bass'))
+  }, require('./data/bass'))
 
   seq.setStructure([[1], [ null]])
 
