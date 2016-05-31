@@ -12,7 +12,7 @@
   "description": "...",
   "author": "Cole Willsea <coleww@gmail.com> (http://colewillsea.com/)",
   "devDependencies": {
-    "@coleww/vocoder": "^0.1.1",
+    "@coleww/vocoder": "^0.1.2",
     "beefy": "^2.1.6",
     "browserify": "^13.0.1",
     "bubble-bass": "^1.1.0",
