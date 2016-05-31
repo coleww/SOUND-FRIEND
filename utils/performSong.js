@@ -1,8 +1,8 @@
-module.exports = function (seq, masterVolume) {
+module.exports = function (seq, mainVolume) {
   var Recorder = require('./recorder')
   // TODO: use browserify trick to inline the worker here (if that is even possible due to liblamemp3 >_<)
   var worker = new Worker('./recorderWorkerMP3.js')
-  var cassetteDeck = new Recorder(masterVolume, {}, worker)
+  var cassetteDeck = new Recorder(mainVolume, {}, worker)
 
   // START
   cassetteDeck.record()

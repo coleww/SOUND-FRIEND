@@ -6,7 +6,7 @@ module.exports = function (ac) {
   return {
     play: function (data, key) {
       piano.update({freq: int2freq(data, key)}, ac.currentTime)
-      piano.play(ac.currentTime)
+      piano.start(ac.currentTime)
     },
     connect: function (destination) {
       piano.connect(destination)
