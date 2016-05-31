@@ -1,4 +1,5 @@
-var instruments = require('./utils/buildInstruments')()
+var ac = new (AudioContext || webkitAudioContext)()
+var instruments = require('./utils/buildInstruments')(ac)
 var seq = require('./songs/donk')(instruments)
 seq.start()
 // require('./utils/performSong')(seq, instruments.masterVolume)
