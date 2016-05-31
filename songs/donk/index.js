@@ -4,20 +4,20 @@ var sb = require('spiderbite')
 module.exports = function (instruments) {
   var seq = sb(config)
   seq.bind(false, function (data) {
-    instruments.kick()
+    instruments.kick.play(data)
   }, require('./data/kick'))
 
   seq.bind(false, function (data) {
-    instruments.hat()
-  }, require('./data/chh'))
+    instruments.hat.play(data)
+  }, require('./data/hat'))
 
   seq.bind(false, function (data) {
-    instruments.snare()
+    instruments.snare.play(data)
   }, require('./data/snare'))
 
   seq.bind(true, function (data, section) {
-    instruments.bass(data, config.key)
-  }, require('./data/bass'))
+    instruments.piano.play(data, config.key)
+  }, require('./data/piano'))
 
   seq.setStructure([[1], [ null]])
 
