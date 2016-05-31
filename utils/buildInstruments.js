@@ -7,7 +7,7 @@ module.exports = function (ac) {
     mainVolume: mainVolume,
     // reverb: reverb,
     bass: require('../instruments/bass')(ac).connect(mainVolume),
-    // pad: require('../instruments/pad')(ac).connect(mainVolume),
+    voice: require('../instruments/voice')(ac).connect(mainVolume),
     piano: require('../instruments/piano')(ac).connect(mainVolume),
     kick: require('../instruments/kick')(ac).connect(mainVolume),
     snare: require('../instruments/snare')(ac).connect(mainVolume),

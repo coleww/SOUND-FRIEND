@@ -7,9 +7,9 @@ meSpeak.loadVoice(require("mespeak/voices/en/en-us.json"))
 module.exports = function (line, ac, cb) {
   var stream = meSpeak.speak(line, {rawdata: "default"})
   ac.decodeAudioData(stream, function (audioData) {
-    var source = ac.createBufferSource()
-    source.buffer = audioData
-    cb(source)
+    // var source = ac.createBufferSource()
+    // source.buffer = audioData
+    cb(audioData)
 
   })
 }

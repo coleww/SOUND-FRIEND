@@ -1,6 +1,7 @@
 var config = require('./config')
 var sb = require('spiderbite')
 
+
 module.exports = function (instruments) {
   var seq = sb(config)
   seq.bind(false, function (data) {
@@ -19,8 +20,15 @@ module.exports = function (instruments) {
     instruments.piano.play(data, config.key)
   }, require('./data/piano'))
 
+  seq.bind(false, function (data, section) {
+    instruments.voice.play(data, config.key)
+    // TODO here, um, generate a next line sort of thing?
+  }, require('./data/snare'))
+
   seq.setStructure([[1], [ null]])
 
+  // might have to do the voice updating here? hrmm, if you always generate the node for the next line ahead of time....
+  // heck, just always call the first bar an "intro"///
   seq.onSectionStart = function (update) {
     if (update) {
       // the global current pattern thing is gonna change on the next section start yo!
@@ -28,6 +36,7 @@ module.exports = function (instruments) {
     } else {
       // just grooving.
     }
+    instruments.voice.vocode(instruments.mainVolume)
   }
 
   return seq

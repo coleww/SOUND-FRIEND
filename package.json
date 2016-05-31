@@ -12,7 +12,7 @@
   "description": "...",
   "author": "Cole Willsea <coleww@gmail.com> (http://colewillsea.com/)",
   "devDependencies": {
-    "@coleww/vocoder": "^0.1.2",
+    "@coleww/vocoder": "^0.1.3",
     "beefy": "^2.1.6",
     "browserify": "^13.0.1",
     "bubble-bass": "^1.1.0",
@@ -26,7 +26,7 @@
     "lfo": "^3.1.0",
     "livereloadify": "^2.0.0",
     "mespeak": "jaeh/mespeak",
-    "pie-ano": "^1.1.1",
+    "pie-ano": "^1.1.2",
     "pluck-node": "^1.0.0",
     "really-hi-hat": "^1.0.0",
     "rim-shot": "^1.1.0",
