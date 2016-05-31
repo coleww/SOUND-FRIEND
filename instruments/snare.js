@@ -1,16 +1,14 @@
-var piano = require('pie-ano')(ac)
-
-
-
-
+var pipFartingOnASnareDrum = require('dj-snazzy-snare')
 
 module.exports = function (ac) {
+  var snare = pipFartingOnASnareDrum(ac)
+  // snare.update({defaults: defaults?})
   return {
     play: function (data) {
-      // HERE based on data, play a different sample
+      snare.start(ac.currentTime)
     },
     connect: function (destination) {
-      // piano.connect(destination)
+      snare.connect(destination)
       return this
     }
   }

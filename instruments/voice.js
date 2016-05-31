@@ -1,16 +1,26 @@
-var meSpeak = require("mespeak")
-meSpeak.loadConfig(require("mespeak/src/mespeak_config.json"))
-meSpeak.loadVoice(require("mespeak/voices/en/en-us.json"))
-
-// right now this will take a line, generate a wav, decode it, attach it to a buffer, and return it
+var generateLine = require('../utils/tts')
+var vocoder = require('vocoder')
+// oh gosh this is a frigging nightmare huh
 
 module.exports = function (line, ac, cb) {
-  var stream = meSpeak.speak(line, {rawdata: "default"})
-  ac.decodeAudioData(stream, function (audioData) {
-    var source = ac.createBufferSource()
-    source.buffer = audioData
-    cb(source)
-    // source.connect(ac.destination)
-    // source.start(ac.currentTime)
+  this.buffer = undefined
+  var that = this
+  generateLine(line, ac, function (buffer) {
+    that.buffer = buffer
   })
+
+  // ok so it needs to have some sort of instrument thing making noise to use as a carrier
+
+  piano.update({attack: 0.1, decay: 0.05, sustain: 0.01, release: 0.01}, ac.currentTime)
+  return {
+    play: function (data, key) {
+      // vocoder()
+      piano.update({freq: int2freq(data, key)}, ac.currentTime)
+      piano.play(ac.currentTime)
+    },
+    connect: function (destination) {
+      piano.connect(destination)
+      return this
+    }
+  }
 }

@@ -1,16 +1,14 @@
-var piano = require('pie-ano')(ac)
-
-
-
-
+var gimmeAHatPleaseOhDearMilliner = require('really-hi-hat')
 
 module.exports = function (ac) {
+  var hat = gimmeAHatPleaseOhDearMilliner(ac)
+  // hat.update({defaults: defaults?})
   return {
     play: function (data) {
-      // HERE based on data, play a different sample
+      hat.start(ac.currentTime)
     },
     connect: function (destination) {
-      // piano.connect(destination)
+      hat.connect(destination)
       return this
     }
   }

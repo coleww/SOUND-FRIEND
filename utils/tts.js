@@ -10,7 +10,6 @@ module.exports = function (line, ac, cb) {
     var source = ac.createBufferSource()
     source.buffer = audioData
     cb(source)
-    // source.connect(ac.destination)
-    // source.start(ac.currentTime)
+
   })
 }

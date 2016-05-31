@@ -1,16 +1,13 @@
-var piano = require('pie-ano')(ac)
-
-
-
-
-
+var kickMe = require('touch-down-dance')
 module.exports = function (ac) {
+  var kick = kickMe(ac)
+  // kick.update({defaults: defaults?})
   return {
     play: function (data) {
-      // HERE based on data, play a different sample
+      kick.start(ac.currentTime)
     },
     connect: function (destination) {
-      // piano.connect(destination)
+      kick.connect(destination)
       return this
     }
   }

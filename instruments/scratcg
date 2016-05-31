@@ -25,16 +25,6 @@ var int2freq = require('int2freq')
   // })
 
 
-  // var kick = require('touch-down-dance')(ac)
-  // // .update({defaults: defaults?})
-  // kick.connect(mainVolume)
-  // var hat = require('really-hi-hat')(ac)
-  // // .update({defaults: defaults?})
-  // hat.connect(mainVolume)
-  // var snare = require('dj-snazzy-snare')(ac)
-  // // .update({defaults: defaults?})
-  // snare.connect(mainVolume)
-
 
   // var piano = require('pie-ano')(ac)
   // piano.update({attack: 0.1, decay: 0.05, sustain: 0.01, release: 0.01}, ac.currentTime)
