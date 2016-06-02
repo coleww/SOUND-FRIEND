@@ -25,3 +25,45 @@ but also like, therefore none of the dependencies can be BSD or certain other li
 - mattdiamond/Recorderjs
 - akrennmair/libmp3lame-js
 - mespeak/espeak/etc.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// just put grammar objects on voice sections? collapse it to generate lines?
+// yeah?
+
+var tracery = require('tracery-grammar');
+ 
+var grammar = tracery.createGrammar({
+  'animal': ['panda','fox','capybara','iguana'],
+  'emotion': ['sad','happy','angry','jealous'],
+  'origin':['I am #emotion.a# #animal#.'],
+});
+ 
+console.log(grammar.flatten('#origin#'));

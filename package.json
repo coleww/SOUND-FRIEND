@@ -37,6 +37,7 @@
     "tap": "^5.7.2",
     "tone-modular": "^0.6.0",
     "touch-down-dance": "^1.0.1",
+    "tracery-grammar": "^2.7.2",
     "tunajs": "^0.4.4",
     "uglifyify": "^3.0.1",
     "watchify": "^3.7.0"
