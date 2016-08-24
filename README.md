@@ -3,6 +3,11 @@
 
 making a website band
 
+### WIP CHECKPOINT
+
+- between the vocoding, mp3 encoding, TTS, etc. this bundle is just too dang large to be a website :< 
+- also like, holy memory leaks batman
+- some of these functions might be cool to extract for use in other stuff...
 
 
 ###### TODO
