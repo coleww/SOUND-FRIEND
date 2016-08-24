@@ -3,11 +3,12 @@
 
 making a website band
 
-it also can maybe poop out some midi notes and perform music "IRL" idk w/e
+
 
 ###### TODO
 ------------------
 
+- how to distribute? mp3 encoder + vocoder + text-to-speech means 50mb+ bundle.js :<
 - pass bpm/key/tonic/etc. as URL args
   - hrm, can it update on change? probably!
   - ideally there should be no interface in the main window/document, just a bunch of gifs or smth

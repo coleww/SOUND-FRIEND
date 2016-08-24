@@ -1,8 +1,8 @@
 {
-  "bpm": 333,
+  "bpm": 420,
   "key": {
     "tonic": "A3",
-    "scale": "major"
+    "scale": "minor"
   },
   "advanceMod": 2
 }

@@ -21,11 +21,15 @@ module.exports = function (instruments) {
   }, require('./data/piano'))
 
   seq.bind(false, function (data, section) {
+    instruments.bass.play(data, config.key)
+  }, require('./data/bass'))
+
+  seq.bind(false, function (data, section) {
     instruments.voice.play(data, config.key)
     // TODO here, um, generate a next line sort of thing?
   }, require('./data/snare'))
 
-  seq.setStructure([[1], [ null]])
+  seq.setStructure([[1,0,0], [0,1,1]])
 
   // might have to do the voice updating here? hrmm, if you always generate the node for the next line ahead of time....
   // heck, just always call the first bar an "intro"///
@@ -36,7 +40,7 @@ module.exports = function (instruments) {
     } else {
       // just grooving.
     }
-    instruments.voice.vocode(instruments.mainVolume)
+    // instruments.voice.vocode(instruments.mainVolume)
   }
 
   return seq

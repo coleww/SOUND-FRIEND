@@ -15,11 +15,15 @@ module.exports = function (instruments) {
     instruments.snare.play(data)
   }, require('./data/snare'))
 
+  seq.bind(false, function (data, section) {
+    instruments.bass.play(data, config.key)
+  }, require('./data/bass'))
+
   seq.bind(true, function (data, section) {
     instruments.piano.play(data, config.key)
   }, require('./data/piano'))
 
-  seq.setStructure([[1], [ null]])
+  seq.setStructure([[1], [ 0]])
 
   seq.onSectionStart = function (update) {
     if (update) {
