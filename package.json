@@ -8,12 +8,11 @@
   },
   "description": "My MIDI Band",
   "author": "Cole Willsea <coleww@gmail.com> (http://colewillsea.com/)",
-  "devDependencies": {
+  "dependencies": {
+    "guitar-tab-generator": "^1.0.0",
     "int2freq": "^1.0.1",
     "midi": "^0.9.4",
     "midi-help": "^0.2.1",
-    "midiutils": "0.0.4",
-    "standard": "^7.1.0",
-    "tap": "^5.7.2"
+    "midiutils": "0.0.4"
   }
 }

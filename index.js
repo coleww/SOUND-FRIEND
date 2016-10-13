@@ -1,3 +1,1 @@
-
-require('./songs/donk').start()
-
+require('./songs/paths')().start()
