@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "standard"
+    "start": "node index.js"
   },
   "description": "My MIDI Band",
   "author": "Cole Willsea <coleww@gmail.com> (http://colewillsea.com/)",
