@@ -24,12 +24,12 @@ module.exports = function (instruments) {
     midi.playSynth(data, 500, config.key)
   }, require('./data/bass'))
 
-
   seq.setStructure([[1,0,0], [0,1,1]])
 
   // might have to do the voice updating here? hrmm, if you always generate the node for the next line ahead of time....
   // heck, just always call the first bar an "intro"///
   seq.onSectionStart = function (update) {
+    console.log('whoo switchy!')
     if (update) {
       // the global current pattern thing is gonna change on the next section start yo!
       // we can figure out what that pattern will be thanks to the seq thing. object bro. buddy!
