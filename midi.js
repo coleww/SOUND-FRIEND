@@ -2,17 +2,17 @@ var midi = require('midi')
 var help = require('midi-help')
 var freq2midi = require('midiutils').frequencyToNoteNumber
 var int2freq = require('int2freq')
-// var output = new midi.output()
-// console.log(output.getPortCount())
-// console.log(output.getPortName(0))
-// output.openPort(0)
+var output = new midi.output()
+console.log(output.getPortCount())
+console.log(output.getPortName(0))
+output.openPort(0)
 
 // // // for debugging when away from the MIDIs
-output = {
-  sendMessage: function (stuff) {
-    console.log(stuff)
-  }
-}
+// output = {
+//   sendMessage: function (stuff) {
+//     console.log(stuff)
+//   }
+// }
 
 module.exports = {
   playSynth: function (data, length, key) {

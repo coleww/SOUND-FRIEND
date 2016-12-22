@@ -16,15 +16,15 @@ module.exports = function () {
     midi.playDrum(data)
   }, require('./data/snare'))
 
-  seq.bind(false, function (data, section) {
+  seq.bind(true, function (data, section) {
     midi.playPiano(data, 150, config.key)
   }, require('./data/piano'))
 
-  seq.bind(true, function (data, section) {
+  seq.bind(false, function (data, section) {
     midi.playSynth(data, 250, config.key)
   }, require('./data/bass'))
 
-  seq.setStructure([[2], [1, 0, 0], [2]])
+  seq.setStructure([[0, 0, 0, 1], [1, 1, 1, 0, 0, 2], [2, 2, 2, 2, 0]])
   var tonic = config.key.tonic.match(/\D/)[0]
   console.log(gtg(tonic, config.key.scale))
 
