@@ -3,17 +3,17 @@ var sb = require('spiderbite')
 
 module.exports = function (instruments) {
   var seq = sb(config)
-  seq.bind(false, function (data) {
-    instruments.kick.play(data)
-  }, require('./data/kick'))
+  // seq.bind(false, function (data) {
+  //   instruments.kick.play(data)
+  // }, require('./data/kick'))
 
-  seq.bind(false, function (data) {
-    instruments.hat.play(data)
-  }, require('./data/hat'))
+  // seq.bind(false, function (data) {
+  //   instruments.hat.play(data)
+  // }, require('./data/hat'))
 
-  seq.bind(false, function (data) {
-    instruments.snare.play(data)
-  }, require('./data/snare'))
+  // seq.bind(false, function (data) {
+  //   instruments.snare.play(data)
+  // }, require('./data/snare'))
 
   seq.bind(false, function (data, section) {
     instruments.bass.play(data, config.key)
@@ -23,7 +23,21 @@ module.exports = function (instruments) {
     instruments.piano.play(data, config.key)
   }, require('./data/piano'))
 
-  seq.setStructure([[1], [ 0]])
+  seq.bind(false, function (data, section) {
+    instruments.pluck.play(data, config.key)
+  }, require('./data/voice'))
+
+  // seq.bind(false, function (data, section) {
+  //   instruments.piano.play(data, config.key)
+  // }, require('./data/guitar'))
+
+  //   seq.bind(false, function (data, section) {
+  //   instruments.piano.play(data, config.key)
+  // }, require('./data/strings'))
+
+  seq.setStructure([[0, 0, 1], [1, 1, 2], [2, 2, 3], [3, 3, 0]])
+
+  
 
   seq.onSectionStart = function (update) {
     if (update) {
