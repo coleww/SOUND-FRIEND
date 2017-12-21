@@ -1,8 +1,8 @@
 {
-  "bpm": 140,
+  "bpm": 600,
   "key": {
-    "tonic": "D2",
-    "scale": "minor"
+    "tonic": "D4",
+    "scale": "pentMin"
   },
-  "advanceMod": 2
+  "advanceMod": 1
 }

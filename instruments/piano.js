@@ -2,10 +2,12 @@ var getAPianoFromThePianoMan = require('pie-ano')
 var int2freq = require('int2freq')
 module.exports = function (ac) {
   var piano = getAPianoFromThePianoMan(ac)
-  piano.update({attack: 0.51, decay: 0.315, sustain: 0.431, release: 0.421}, ac.currentTime)
+  piano.update({attack: 0.751, decay: 0.14315, sustain: 0.1431, release: 0.1421}, ac.currentTime)
   return {
     play: function (data, key) {
-      piano.update({freq: int2freq(data + 24, key)}, ac.currentTime)
+      if (data > 5) data = 5
+      if (data < -5) data = -5
+      piano.update({freq: int2freq(data, key)}, ac.currentTime)
       piano.start(ac.currentTime)
     },
     connect: function (destination) {

@@ -12,21 +12,24 @@
   "description": "...",
   "author": "Cole Willsea <coleww@gmail.com> (http://colewillsea.com/)",
   "devDependencies": {
-    "beefy": "^2.1.6",
+    "a-whining-capitalist": "^1.1.0",
     "browserify": "^13.0.1",
     "bubble-bass": "^1.1.0",
     "int2freq": "^1.0.1",
-    "lfo": "^3.1.0",
     "livereloadify": "^2.0.0",
     "midi": "^0.9.4",
     "midi-help": "^0.2.1",
     "midiutils": "0.0.4",
     "pie-ano": "^1.1.2",
-    "pluck-node": "^1.0.0",
     "serve": "^1.4.0",
+    "shuffle-array": "^1.0.1",
+    "sparkle-motion": "^1.1.0",
     "spiderbite": "^1.1.2",
+    "tri-tri": "^1.0.3",
     "tunajs": "^0.4.4",
     "uglifyify": "^3.0.1",
-    "watchify": "^3.7.0"
+    "warlock-bass": "^1.0.0",
+    "watchify": "^3.7.0",
+    "web-midi": "^2.1.0"
   }
 }

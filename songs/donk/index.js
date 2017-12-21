@@ -1,41 +1,76 @@
 var config = require('./config')
 var sb = require('spiderbite')
+// var midi = require('../../utils/midi-input');
+var shuffle = require('shuffle-array')
+// midi();
 
 module.exports = function (instruments) {
   var seq = sb(config)
-  // seq.bind(false, function (data) {
-  //   instruments.kick.play(data)
-  // }, require('./data/kick'))
 
-  // seq.bind(false, function (data) {
-  //   instruments.hat.play(data)
-  // }, require('./data/hat'))
 
-  // seq.bind(false, function (data) {
-  //   instruments.snare.play(data)
-  // }, require('./data/snare'))
+ var bassdata = shuffle(require('./data/bass')).map(function (section) {
+  section.data = shuffle(section.data).map(function (dataBlock) {
+    return shuffle(dataBlock)
+  })
+  return section
+ })
 
   seq.bind(false, function (data, section) {
     instruments.bass.play(data, config.key)
-  }, require('./data/bass'))
+  }, bassdata)
+
+
+var peedata = shuffle(require('./data/piano')).map(function (section) {
+  section.data = shuffle(section.data).map(function (dataBlock) {
+    return shuffle(dataBlock)
+  })
+  // section.config.mod = shuffle([1, 4, 2, 3])[0]
+  return section
+})
 
   seq.bind(true, function (data, section) {
     instruments.piano.play(data, config.key)
-  }, require('./data/piano'))
+  }, peedata)
+
+
+var vodata = shuffle(require('./data/voice')).map(function (section) {
+  section.data = shuffle(section.data).map(function (dataBlock) {
+    return shuffle(dataBlock)
+  })
+  // section.config.mod = shuffle([1, 2, 3])[0]
+  return section
+})
 
   seq.bind(false, function (data, section) {
-    instruments.pluck.play(data, config.key)
-  }, require('./data/voice'))
+    instruments.whiny.play(data, config.key)
+  }, vodata)
 
-  // seq.bind(false, function (data, section) {
-  //   instruments.piano.play(data, config.key)
-  // }, require('./data/guitar'))
 
-  //   seq.bind(false, function (data, section) {
-  //   instruments.piano.play(data, config.key)
-  // }, require('./data/strings'))
+var guidata = shuffle(require('./data/guitar')).map(function (section) {
+  section.data = shuffle(section.data).map(function (dataBlock) {
+    return shuffle(dataBlock)
+  })
+  // section.config.mod = shuffle([1, 2, 3])[0]
+  return section
+})
 
-  seq.setStructure([[0, 0, 1], [1, 1, 2], [2, 2, 3], [3, 3, 0]])
+  seq.bind(false, function (data, section) {
+    instruments.warbass.play(data, config.key)
+  }, guidata)
+
+
+var strdata = shuffle(require('./data/strings')).map(function (section) {
+  section.data = shuffle(section.data).map(function (dataBlock) {
+    return shuffle(dataBlock)
+  })
+  return section
+})
+
+  seq.bind(false, function (data, section) {
+    instruments.sparkle.play(data, config.key)
+  }, strdata)
+
+  seq.setStructure(shuffle([[0, 2, 1], [1, 3, 2], [2, 0, 3], [3, 1, 0]]))
 
   
 
@@ -50,16 +85,5 @@ module.exports = function (instruments) {
 
   return seq
 }
-
-
-
-// G# 6 -1
-// C# 2 -5
-// a 0 7 -7
-// F# 5 -2
-// E 4  -3
-// b 1 -6
-// d 3 -4
-
 
 
