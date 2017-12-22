@@ -8,7 +8,6 @@
     "livereload": "livereloadify ./www",
     "serve": "serve ./www",
     "test": "beefy ./utils/testInstrument.js",
-    "deploy": "gh-pages-deploy"
   },
   "description": "...",
   "author": "Cole Willsea <coleww@gmail.com> (http://colewillsea.com/)",
@@ -16,7 +15,6 @@
     "a-whining-capitalist": "^1.1.0",
     "browserify": "^13.0.1",
     "bubble-bass": "^1.1.0",
-    "gh-pages-deploy": "^0.4.2",
     "int2freq": "^1.0.1",
     "livereloadify": "^2.0.0",
     "midi": "^0.9.4",
