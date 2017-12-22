@@ -3,12 +3,15 @@ var sb = require('spiderbite')
 // var midi = require('../../utils/midi-input');
 var shuffle = require('shuffle-array')
 // midi();
+config.key.tonic = shuffle(['A', 'C', 'D', 'F', 'G', 'B', 'E', 'C#', 'F#', 'D#', 'A#', 'G#'])[0] + '2'
+config.key.scale = shuffle(['major', 'minor', 'pentMaj', 'pentMin', 'blues'])[0]
+config.bpm = ~~(Math.random() * 500) + 150
 
 module.exports = function (instruments) {
   var seq = sb(config)
 
 
- var bassdata = shuffle(require('./data/bass')).map(function (section) {
+ var bassdata = (require('./data/bass')).map(function (section) {
   section.data = shuffle(section.data).map(function (dataBlock) {
     return shuffle(dataBlock)
   })
@@ -20,11 +23,11 @@ module.exports = function (instruments) {
   }, bassdata)
 
 
-var peedata = shuffle(require('./data/piano')).map(function (section) {
+var peedata = (require('./data/piano')).map(function (section) {
   section.data = shuffle(section.data).map(function (dataBlock) {
     return shuffle(dataBlock)
   })
-  // section.config.mod = shuffle([1, 4, 2, 3])[0]
+  section.config.mod = shuffle([1, 4, 2, 3])[0]
   return section
 })
 
@@ -33,11 +36,11 @@ var peedata = shuffle(require('./data/piano')).map(function (section) {
   }, peedata)
 
 
-var vodata = shuffle(require('./data/voice')).map(function (section) {
+var vodata = (require('./data/voice')).map(function (section) {
   section.data = shuffle(section.data).map(function (dataBlock) {
     return shuffle(dataBlock)
   })
-  // section.config.mod = shuffle([1, 2, 3])[0]
+  section.config.mod = shuffle([1, 2, 3])[0]
   return section
 })
 
@@ -46,11 +49,11 @@ var vodata = shuffle(require('./data/voice')).map(function (section) {
   }, vodata)
 
 
-var guidata = shuffle(require('./data/guitar')).map(function (section) {
+var guidata = (require('./data/guitar')).map(function (section) {
   section.data = shuffle(section.data).map(function (dataBlock) {
     return shuffle(dataBlock)
   })
-  // section.config.mod = shuffle([1, 2, 3])[0]
+  section.config.mod = shuffle([1, 2, 3])[0]
   return section
 })
 
@@ -59,7 +62,7 @@ var guidata = shuffle(require('./data/guitar')).map(function (section) {
   }, guidata)
 
 
-var strdata = shuffle(require('./data/strings')).map(function (section) {
+var strdata = (require('./data/strings')).map(function (section) {
   section.data = shuffle(section.data).map(function (dataBlock) {
     return shuffle(dataBlock)
   })
