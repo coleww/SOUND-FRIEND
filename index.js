@@ -25,7 +25,7 @@ function song (instruments) {
 		})
 
 		if (!hasLead) {
-			bassData.lead = true
+			bassdata.lead = true
 			hasLead = true
 		}
 		seq.bind(false, function (data, section) {
