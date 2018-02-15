@@ -109,6 +109,10 @@ function song (instruments) {
 		}, strdata)
 	}
 
+	if (!hasLead){
+		window.location.reload()
+	}
+
 	seq.setStructure([[0]])
 
 
