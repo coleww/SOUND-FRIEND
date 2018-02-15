@@ -1,8 +1,9 @@
 var sparklyPlease = require('sparkle-motion')
 var int2freq = require('int2freq')
+var randomADSR = require('../utils/randomADSR')
 module.exports = function (ac) {
   var sparkle = sparklyPlease(ac)
-  sparkle.update({attack: 0.27151, decay: 0.15, sustain: 0.41, release: 0.1611}, ac.currentTime)
+  sparkle.update(randomADSR(), ac.currentTime)
   return {
     play: function (data, key) {
 

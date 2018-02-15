@@ -1,8 +1,9 @@
 var bubblesMoreBubblesPlease = require('bubble-bass')
 var int2freq = require('int2freq')
+var randomADSR = require('../utils/randomADSR')
 module.exports = function (ac) {
   var bass = bubblesMoreBubblesPlease(ac)
-  bass.update({attack: 0.2991, decay: 0.35, sustain: 0.741, release: 0.8611}, ac.currentTime)
+  bass.update(randomADSR(), ac.currentTime)
   return {
     play: function (data, key) {
 

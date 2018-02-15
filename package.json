@@ -3,16 +3,19 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "browserify -g uglifyify index.js -o www/bundle.js",
+    "build": "browserify index.js -o www/bundle.js -t [ babelify ] -g uglifyify ",
     "watch": "watchify index.js -o www/bundle.js --debug --verbose",
-    "livereload": "livereloadify ./www",
-    "serve": "serve ./www",
+    "livereload": "livereloadify",
+    "serve": "serve ",
     "test": "beefy ./utils/testInstrument.js"
   },
   "description": "...",
   "author": "Cole Willsea <coleww@gmail.com> (http://colewillsea.com/)",
   "devDependencies": {
     "a-whining-capitalist": "^1.1.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babelify": "^8.0.0",
     "browserify": "^13.0.1",
     "bubble-bass": "^1.1.0",
     "int2freq": "^1.0.1",

@@ -1,8 +1,9 @@
 var getAPianoFromThePianoMan = require('pie-ano')
 var int2freq = require('int2freq')
+var randomADSR = require('../utils/randomADSR')
 module.exports = function (ac) {
   var piano = getAPianoFromThePianoMan(ac)
-  piano.update({attack: 0.2751, decay: 0.14315, sustain: 0.1431, release: 0.1421}, ac.currentTime)
+  piano.update(randomADSR(), ac.currentTime)
   return {
     play: function (data, key) {
       if (data > 5) data = 5
