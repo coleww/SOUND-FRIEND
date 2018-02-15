@@ -6,8 +6,8 @@ module.exports = function (ac) {
   piano.update(randomADSR(), ac.currentTime)
   return {
     play: function (data, key) {
-      if (data > 5) data = 5
-      if (data < -5) data = -5
+      // if (data > 5) data = 5
+      // if (data < -5) data = -5
       piano.update({freq: int2freq(data, key)}, ac.currentTime)
       piano.start(ac.currentTime)
     },

@@ -7,8 +7,8 @@ module.exports = function (ac) {
   return {
     play: function (data, key) {
 
-      if (data > 9) data = 9
-      if (data < -9) data = -9
+      // if (data > 9) data = 9
+      // if (data < -9) data = -9
       bass.update({freq: int2freq(data, key)}, ac.currentTime)
       bass.start(ac.currentTime)
     },

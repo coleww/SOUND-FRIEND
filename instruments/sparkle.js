@@ -7,8 +7,8 @@ module.exports = function (ac) {
   return {
     play: function (data, key) {
 
-      if (data > 7) data = 7
-      if (data < -7) data = -7
+      // if (data > 7) data = 7
+      // if (data < -7) data = -7
       sparkle.update({freq: int2freq(data, key)}, ac.currentTime)
       sparkle.start(ac.currentTime)
     },

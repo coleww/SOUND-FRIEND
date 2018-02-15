@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "browserify index.js -o www/bundle.js -t [ babelify ] -g uglifyify ",
+    "build": "browserify index.js -o www/bundle.js  ",
     "watch": "watchify index.js -o www/bundle.js --debug --verbose",
     "livereload": "livereloadify",
     "serve": "serve ",
@@ -20,9 +20,6 @@
     "bubble-bass": "^1.1.0",
     "int2freq": "^1.0.1",
     "livereloadify": "^2.0.0",
-    "midi": "^0.9.4",
-    "midi-help": "^0.2.1",
-    "midiutils": "0.0.4",
     "pie-ano": "^1.1.2",
     "serve": "^1.4.0",
     "shuffle-array": "^1.0.1",

@@ -12,9 +12,6 @@ module.exports = function (length) {
 			makeProbs(length)
 		],
 		nexts: makeNexts(3),
-
-
-
 		config: {
 			mod: ~~(Math.random() * 4)
 		}
